@@ -18,3 +18,6 @@
 
 4. Finally I checked it's availability with this command
  ![Link to screenshot](assets/aws_account_verification.png)
+
+## References
+AWS Docuemntation
