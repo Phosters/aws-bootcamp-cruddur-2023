@@ -2,8 +2,9 @@
 
 ## Week 0 Assignment ##
 
-# Lucid diagram for Architecture #
-![Link to architecture](assets/crudder%20architecture.png)
+## Lucid diagram for Architecture ##
+![Link to architecture within github](assets/crudder%20architecture.png)
+![Link to architecture within Lucid](https://lucid.app/lucidchart/21f43c2e-11e8-4f41-a6ea-8af67f989cb9/editviewport_loc=-2095%2C808%2C3636%2C1569%2C0_0&invitationId=inv_a6b23ded-3438-4410-b87d-2ccac1b1ba74)
 
 ## Process involved during Installing AWS CLI ##
 1.The CLI instaaltion process was referenced from this website 
