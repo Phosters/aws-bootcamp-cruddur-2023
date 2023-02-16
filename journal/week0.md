@@ -11,7 +11,9 @@
 !(https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 
 2. After choosing the windows version, I installed it with this command
- ```msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi ```
+ ```
+ msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi 
+ ```
  
 3. Poweshell with administrative right was used to install it 
 ![Link to screenshot](assets/installing_aws-cli.png)
