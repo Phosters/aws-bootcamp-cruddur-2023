@@ -8,15 +8,15 @@ In Week one, I will be containerizing crudder app:
 4. Next, I will use docker compose to manage multiple conatiner ie; the frontend and the backed end
 5. Finally, I will Integrate app with a database
 
-## Breakdown for 1:
-### Reference: ![Link to reference](https://www.gitpod.io/docs/configure/authentication/github)
+## Connecting Gitpod to Github:
+### Reference: [Link to reference](https://www.gitpod.io/docs/configure/authentication/github)
 1. I logged onto my Github repository and locted my Cruddur repo
 2. Infront of my repo URL I inserted this ```gitpod.io/``` connecting my Github to Gitpod
 3. I clicked on gipod to locate my workspace to see everything is fine in there
 4. The entire Crudder app repo was there just like Github
+!(Link to Github and Gitpod connection)[assets/gitpod-github.png]
 
-
-
+## Containerzing the Frontend of Crudder:
 
 
 
