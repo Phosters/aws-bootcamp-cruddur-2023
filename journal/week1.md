@@ -138,7 +138,7 @@ After this lets run our docker compose with this ``` docker-compose up -d ```
 
 
 ### Finally we conclude with database
-
+Now
 
 
 
