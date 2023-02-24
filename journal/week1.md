@@ -71,6 +71,80 @@ ENV FLASK_ENV=development
 EXPOSE ${PORT}
 CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=4567"] ```
 
+Because manually set the frontend and backend environment, we will have to unset them before we run our container
+this is the command to unset them: ``` unset FRONTEND_URL ``` and then check if it exist/search with the grep command ``` env | grep FRONTEND ```
+                                    ``` unset BACKEND_URL ``` and then check if it existwith the grep command  ``` env | grep BACKEND ```
+
+We are now set to build our docker; we have two options either to build with our root or backend flask, in this tutorial we will use the root so be in the root
+To build the image for the backend, use this command to locate the docker file within backend flask with name backend-flask
+``` docker build -t  backend-flask ./backend-flask ```
+To confirm you have backend-flask as an image in gitpod, locate it at Dockerand you can run ``` docker images ``` to show you your images
+Now lets run our docker  ``` docker run --rm -p 4567:4567 -e FRONTEND_URL="*" -e BACKEND_URL="*" -it backend-flask ``` and appen it with this ```/api/activities/home``` in the URL in order to be active
+Our backend is now working but since we didnt detach it during installation, ctrl+cwill kill it
+
+### Now lets build the frontend
+Create a docker file in the frontend ie ``` dockerfile ```, in the dockerfile paste this command
+
+``` FROM node:16.18
+
+ENV PORT=3000
+
+COPY . /frontend-react-js
+WORKDIR /frontend-react-js
+RUN npm install
+EXPOSE ${PORT}
+CMD ["npm", "start"] ```
+
+After that run an npm for packages/ modules needed within the frontend with this ``` npm install ```
+Now go back to your root directory and build your image from the dockerfile in the frontend with this: ``docker build -t frontend-react-js ./frontend-react-js ```
+Lets run the frontend image with this, ``` docker run -p 3000:3000 -d frontend-react-js ```
+Our frontend will be up and running now, but because we want to manage it with docker-compose we will kill it with ``` docker stop imageid ```
+
+### Now let us write a compose.yml file to run both the fonrtend and back end
+First create a compose.yml file in the root directory with this name ```docker-compose.yml ```
+Now lets copy and paste its contents into it with this:
+
+```
+version: "3.8"
+services:
+  backend-flask:
+    environment:
+      FRONTEND_URL: "https://3000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
+      BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
+    build: ./backend-flask
+    ports:
+      - "4567:4567"
+    volumes:
+      - ./backend-flask:/backend-flask
+  frontend-react-js:
+    environment:
+      REACT_APP_BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
+    build: ./frontend-react-js
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend-react-js:/frontend-react-js
+
+# the name flag is a hack to change the default prepend folder
+# name when outputting the image names
+networks: 
+  internal-network:
+    driver: bridge
+    name: cruddur
+    
+    ```
+
+After this lets run our docker compose with this ``` docker-compose up -d ```
+
+
+### Finally we conclude with database
+
+
+
+
+
+
+
 
 
 
