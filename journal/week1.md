@@ -125,8 +125,8 @@ services:
     volumes:
       - ./frontend-react-js:/frontend-react-js
 
-# the name flag is a hack to change the default prepend folder
-# name when outputting the image names
+#### the name flag is a hack to change the default prepend folder
+#### name when outputting the image names
 networks: 
   internal-network:
     driver: bridge
@@ -138,9 +138,59 @@ After this lets run our docker compose with this ``` docker-compose up -d ```
 
 
 ### Finally we conclude with database
-Now
+Now we willbe connecting Postgress(sql) and DynamoDB(Nosql) to our docker-compose
+First copy dynamoDB local under the docker-compose file ie; add it to the bottom of the docker-compose file
+Lets start with the commands for postgress:
 
+```
+services:
+  db:
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
 
+    ```
+check from the latter part and take off the volumes which we will paste it after everything to make our code more readeable ie; after the databases, then we move to volumes
+
+After we are done with this, we add DynamoDB with this right after postgress:
+
+```
+services:
+  dynamodb-local:
+    # https://stackoverflow.com/questions/67533058/persist-local-dynamodb-data-in-volumes-lack-permission-unable-to-open-databa
+    # We needed to add user:root to get this working.
+    user: root
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+    image: "amazon/dynamodb-local:latest"
+    container_name: dynamodb-local
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./docker/dynamodb:/home/dynamodblocal/data"
+    working_dir: /home/dynamodblocal
+    ```
+    
+  Finally we add the volumes beneath everything to detach if from the app and databases commands. 
+  With that, insert this:
+ NB: Notice we have a pending volume from the database so we will insert it here and add the rest
+ 
+ ```
+ volumes:
+  db:
+    driver: local
+    ```
+    
+
+ 
+  
+  
+ 
 
 
 
