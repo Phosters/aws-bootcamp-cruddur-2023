@@ -186,9 +186,14 @@ services:
  volumes:
   db:
     driver: local
-    ```
+  
+  ```
     
-
+Now run the docker compose for our container  ``` docker-compose up -d ```
+Open the ports for the frontend, backend and database
+reference to frontend and backend
+[link to Frontend]()
+[link to Backend]()
 
 ### Challenges
 When copying the databse commands into the docker-compose yaml file, I copied it with services which gave me an error ie; ``` map key be unique ```
