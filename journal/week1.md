@@ -69,7 +69,9 @@ COPY . .
 ENV FLASK_ENV=development
 
 EXPOSE ${PORT}
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=4567"] ```
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=4567"] 
+
+```
 
 Because manually set the frontend and backend environment, we will have to unset them before we run our container
 this is the command to unset them: ``` unset FRONTEND_URL ``` and then check if it exist/search with the grep command ``` env | grep FRONTEND ```
@@ -140,7 +142,7 @@ After this lets run our docker compose with this ``` docker-compose up -d ```
 ### Finally we conclude with database
 Now we willbe connecting Postgress(sql) and DynamoDB(Nosql) to our docker-compose
 First copy dynamoDB local under the docker-compose file ie; add it to the bottom of the docker-compose file
-Lets start with the commands for postgress:
+Lets start with the commands for postgress:NB: DONT COPY THE SERVICES
 
 ```
 services:
@@ -158,7 +160,7 @@ services:
     ```
 check from the latter part and take off the volumes which we will paste it after everything to make our code more readeable ie; after the databases, then we move to volumes
 
-After we are done with this, we add DynamoDB with this right after postgress:
+After we are done with this, we add DynamoDB with this right after postgress: NB: DONT COPY THE SERVICES
 
 ```
 services:
@@ -187,8 +189,10 @@ services:
     ```
     
 
- 
-  
+
+### Challenges
+When copying the databse commands into the docker-compose yaml file, I copied it with services which gave me an error ie; ``` map key be unique ```
+After reading an article about it I resolved the issued reference [Link to map key in yaml](https://stackoverflow.com/questions/71192632/error-map-keys-must-be-unique-while-using-yaml-extension-field-in-docker-compose) 
   
  
 
