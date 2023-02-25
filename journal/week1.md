@@ -192,8 +192,13 @@ services:
 Now run the docker compose for our container  ``` docker-compose up -d ```
 Open the ports for the frontend, backend and database
 reference to frontend and backend
-[link to Frontend]()
-[link to Backend]()
+![link to Frontend](assets/frontend.png)
+![link to Backend](assets/backend.png)
+![link to the Image showing datbase running too](assets/3-tier)
+
+### Checking database
+Once the ports are opened, type aws in the command to see whether you have aws cli installed
+After that create a table and insert the data you want to work with
 
 ### Challenges
 When copying the databse commands into the docker-compose yaml file, I copied it with services which gave me an error ie; ``` map key be unique ```
