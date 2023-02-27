@@ -21,7 +21,7 @@ In Week one, I will be containerizing crudder app:
 ![Link to Github and Gitpod connection](assets/gitpod-github.png)
 
 
-## Containerzing the Backtend of Crudder:
+## Containerzing the Backend of Crudder:
 
 NB: I added the extension for docker in Gitpod first.
 After that, we will install flask which is used for developing web applications using python. Advantages of using Flask framework are: There is a built-in development server and a fast debugger provided [More information on Flask](https://www.analyticsvidhya.com/blog/2021/10/easy-introduction-to-flask-framework-for-beginners/)
