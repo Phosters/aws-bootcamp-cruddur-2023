@@ -101,10 +101,31 @@ CMD ["npm", "start"]
 
 ```
 
-After that run an npm for packages/ modules needed within the frontend with this ``` npm install ```
-Now go back to your root directory and build your image from the dockerfile in the frontend with this: ``docker build -t frontend-react-js ./frontend-react-js ```
-Lets run the frontend image with this, ``` docker run -p 3000:3000 -d frontend-react-js ```
-Our frontend will be up and running now, but because we want to manage it with docker-compose we will kill it with ``` docker stop imageid ```
+After that run an npm for packages/ modules needed within the frontend with this 
+
+```
+npm install 
+```
+
+Now go back to your root directory and build your image from the dockerfile in the frontend with this: 
+
+```
+docker build -t frontend-react-js ./frontend-react-js
+```
+
+Lets run the frontend image with this,
+
+```
+docker run -p 3000:3000 -d frontend-react-js
+
+```
+
+Our frontend will be up and running now, but because we want to manage it with docker-compose we will kill it with 
+
+``` 
+docker stop imageid
+
+```
 
 ### Now let us write a compose.yml file to run both the fonrtend and back end
 First create a compose.yml file in the root directory with this name ```docker-compose.yml ```
