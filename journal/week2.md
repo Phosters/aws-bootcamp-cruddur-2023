@@ -17,6 +17,22 @@ These tools are :
 
 
 ### AWS X-Ray Instrumentation 
+
+Export the region you would want to work in, in my case I will use North Virginia with this:
+
+```
+export AWS_REGION="us-east-1"
+
+```
+
+In the context of Amazon Web Services (AWS), the AWS_REGION environment variable is used to specify the AWS region that an AWS client or SDK should connect to. The value "us-east-1" represents the US East (N. Virginia) region in AWS, which is one of the most commonly used regions in the platform, would do that with this:
+
+```
+
+gp env AWS_REGION="us-east-1"
+
+```
+
 Lets begin with installing AWS CLI and the framework for the frontend within the gitpod.yaml file:
 These tasks are part of a configuration file for a tool called "Theia" that allows developers to run a cloud-based Integrated Development Environment (IDE). The tasks are defined using the YAML syntax and describe two separate jobs that will be executed sequentially.
 
@@ -53,20 +69,19 @@ tasks:
 
 Locate the frontend and install npm with this ``` npm install ```
 
-Now install the AWS SDK in the requirements.txt document with this : ``` aws-xray-sdk ```
+Now install the AWS SDK in the requirements.txt document in the backend where we will be instrumenting with this : ``` aws-xray-sdk ```
 
-Export the region you would want to work in, in my case I will use North Virginia with this:
+Within the backend install the update that has happened within the requirement document with this: ``` pip install -r requirement.txt ```
 
-```
-export AWS_REGION="us-east-1"
-
-```
-
-In the context of Amazon Web Services (AWS), the AWS_REGION environment variable is used to specify the AWS region that an AWS client or SDK should connect to. The value "us-east-1" represents the US East (N. Virginia) region in AWS, which is one of the most commonly used regions in the platform, would do that with this:
+Lets open the application in the backend with name app.py and insert the code to import and install the sdk, make sure to change service name to backend flask
 
 ```
+from aws_xray_sdk.core import xray_recorder
+from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
-gp env AWS_REGION="us-east-1"
+xray_url = os.getenv("AWS_XRAY_URL")
+xray_recorder.configure(service='Cruddur', dynamic_naming=xray_url)
+XRayMiddleware(app, xray_recorder)
 
 ```
 
