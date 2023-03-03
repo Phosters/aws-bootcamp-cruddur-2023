@@ -48,6 +48,7 @@ export FRONTEND_URL="*"
 export BACKEND_URL="*"
 python3 -m flask run --host=0.0.0.0 --port=4567
 cd ..
+
 ```
 
 ### With this knowledge, we will then run this app in a container for the backend
@@ -87,7 +88,8 @@ Our backend is now working but since we didnt detach it during installation, ctr
 ### Now lets build the frontend
 Create a docker file in the frontend ie ``` dockerfile ```, in the dockerfile paste this command
 
-``` FROM node:16.18
+``` 
+FROM node:16.18
 
 ENV PORT=3000
 
@@ -95,7 +97,9 @@ COPY . /frontend-react-js
 WORKDIR /frontend-react-js
 RUN npm install
 EXPOSE ${PORT}
-CMD ["npm", "start"] ```
+CMD ["npm", "start"]
+
+```
 
 After that run an npm for packages/ modules needed within the frontend with this ``` npm install ```
 Now go back to your root directory and build your image from the dockerfile in the frontend with this: ``docker build -t frontend-react-js ./frontend-react-js ```
@@ -126,15 +130,18 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend-react-js:/frontend-react-js
-
+      
+```
 #### the name flag is a hack to change the default prepend folder
 #### name when outputting the image names
+
+```
 networks: 
   internal-network:
     driver: bridge
     name: cruddur
     
-    ```
+```
 
 After this lets run our docker compose with this ``` docker-compose up -d ```
 
@@ -157,7 +164,8 @@ services:
     volumes: 
       - db:/var/lib/postgresql/data
 
-    ```
+```
+
 check from the latter part and take off the volumes which we will paste it after everything to make our code more readeable ie; after the databases, then we move to volumes
 
 After we are done with this, we add DynamoDB with this right after postgress: NB: DONT COPY THE SERVICES
@@ -176,7 +184,8 @@ services:
     volumes:
       - "./docker/dynamodb:/home/dynamodblocal/data"
     working_dir: /home/dynamodblocal
-    ```
+    
+  ```
     
   Finally we add the volumes beneath everything to detach if from the app and databases commands. 
   With that, insert this:
