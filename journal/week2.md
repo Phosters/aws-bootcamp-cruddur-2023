@@ -84,4 +84,34 @@ xray_recorder.configure(service='Cruddur', dynamic_naming=xray_url)
 XRayMiddleware(app, xray_recorder)
 
 ```
+Creats a json file in aws file for x-ray resources with name xray.json and change the service name to ``` backend-flask ```
+
+```
+{
+  "SamplingRule": {
+      "RuleName": "Cruddur",
+      "ResourceARN": "*",
+      "Priority": 9000,
+      "FixedRate": 0.1,
+      "ReservoirSize": 5,
+      "ServiceName": "Cruddur",
+      "ServiceType": "*",
+      "Host": "*",
+      "HTTPMethod": "*",
+      "URLPath": "*",
+      "Version": 1
+  }
+}
+
+```
+
+Now lets create our x-ray group with this, making sure you update the service name to backend-flask, and run in the backend flask, because our focus is on just data, remove the ``` {fault OR error} ```
+
+```
+aws xray create-group \
+   --group-name "Cruddur" \
+   --filter-expression "service(\"$FLASK_ADDRESS\") {fault OR error}"
+```
+
+
 
