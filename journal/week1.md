@@ -201,8 +201,11 @@ services:
 Now run the docker compose for our container  ``` docker-compose up -d ```
 Open the ports for the frontend, backend and database
 reference to frontend and backend
+
 ![link to Frontend](assets/frontend.png)
+
 ![link to Backend](assets/backend.png)
+
 ![link to the Image showing datbase running too](assets/3-tier.png)
 
 ### Checking database
