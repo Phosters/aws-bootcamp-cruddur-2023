@@ -113,5 +113,3 @@ aws xray create-group \
    --filter-expression "service(\"$FLASK_ADDRESS\") {fault OR error}"
 ```
 
-
-
