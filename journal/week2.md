@@ -53,7 +53,7 @@ tasks:
 
 Locate the frontend and install npm with this ``` npm install ```
 
-Now install the AWS SDK in the requirement document with this: ``` aws-xray-sdk ```
+Now install the AWS SDK in the requirements.txt document with this : ``` aws-xray-sdk ```
 
 Export the region you would want to work in, in my case I will use North Virginia with this:
 
