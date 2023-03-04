@@ -272,7 +272,7 @@ aws dynamodb create-table \
  ```
  
  ### Connecting Postgress Client
- To connect postgress a client is needed to connect to it with this:
+ To connect postgress a client is needed to connect to it with this, paste this ommand within the gitpod.yml
  
  ```
    - name: postgres
