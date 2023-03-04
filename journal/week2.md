@@ -71,7 +71,7 @@ Locate the frontend and install npm with this ``` npm install ```
 
 Now install the AWS SDK in the requirements.txt document in the backend where we will be instrumenting with this : ``` aws-xray-sdk ```
 
-Within the backend install the update that has happened within the requirement document with this: ``` pip install -r requirement.txt ```
+Within the backend install the update that has happened within the requirement document with this: ``` pip install -r requirements.txt ```
 
 Lets open the application in the backend with name app.py and insert the code to import and install the sdk, make sure to change service name to backend flask
 
