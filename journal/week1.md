@@ -283,7 +283,22 @@ aws dynamodb create-table \
       sudo apt install -y postgresql-client-13 libpq-dev
 ```
  
+To connect postgress, add the database extension in your workspace and then connect
+remember the password is ``` password ```
 
+connecting 
+
+```
+psql -Upostgres --host localhost
+
+```
+
+To list your data
+```
+\l
+
+```
+ls
 ### Challenges
 When copying the databse commands into the docker-compose yaml file, I copied it with services which gave me an error ie; ``` map key be unique ```
 After reading an article about it I resolved the issued reference [Link to map key in yaml](https://stackoverflow.com/questions/71192632/error-map-keys-must-be-unique-while-using-yaml-extension-field-in-docker-compose) 
