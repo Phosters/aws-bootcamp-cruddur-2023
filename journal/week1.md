@@ -267,10 +267,21 @@ aws dynamodb create-table \
  Use this to get records of your database:
  
  ```
- aws dynamodb scan --table-name cruddur_cruds --query "Items" --endpoint-url http://localhost:8000
+ aws dynamodb scan --table-name Music --query "Items" --endpoint-url http://localhost:8000
  
  ```
  
+ ### Connecting Postgress Client
+ To connect postgress a client is needed to connect to it with this:
+ 
+ ```
+   - name: postgres
+    init: |
+      curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
+      echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list
+      sudo apt update
+      sudo apt install -y postgresql-client-13 libpq-dev
+```
  
 
 ### Challenges
