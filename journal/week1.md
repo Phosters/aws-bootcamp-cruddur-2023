@@ -123,7 +123,7 @@ docker run -p 3000:3000 -d frontend-react-js
 Our frontend will be up and running now, but because we want to manage it with docker-compose we will kill it with 
 
 ``` 
-docker stop imageid
+docker stop containerID
 
 ```
 
