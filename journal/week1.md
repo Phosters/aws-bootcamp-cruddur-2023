@@ -229,6 +229,8 @@ reference to frontend and backend
 
 ![link to the Image showing datbase running too](assets/3-tier.png)
 
+![link to the Image showing datbase running too](assets/postgres.png)
+
 ### Checking database
 Once the ports are opened, type aws in the command to see whether you have aws cli installed
 After that create a table and insert the data you want to work with 
