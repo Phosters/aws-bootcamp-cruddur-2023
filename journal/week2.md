@@ -112,4 +112,56 @@ aws xray create-group \
    --group-name "Cruddur" \
    --filter-expression "service(\"backend-flask\")"
 ```
+Log on to AWS console and check from xray that ``` cruddur ``` has been created
+
+Now lets add daemon sampling rule to see data
+
+```
+aws xray create-sampling-rule --cli-input-json file://aws/json/xray.json
+
+```
+
+We install our r-ray daemon file to docker compose fle with this
+
+```
+  xray-daemon:
+    image: "amazon/aws-xray-daemon"
+    environment:
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+      AWS_REGION: "us-east-1"
+    command:
+      - "xray -o -b xray-daemon:2000"
+    ports:
+      - 2000:2000/udp
+  ```
+  
+  After that, add it's environment variables in the docker compose with this
+  
+ ```
+   AWS_XRAY_URL: "*4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}*"
+   AWS_XRAY_DAEMON_ADDRESS: "xray-daemon:2000"
+
+```
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
