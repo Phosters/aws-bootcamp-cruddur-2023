@@ -144,7 +144,17 @@ We install our r-ray daemon file to docker compose fle with this
 
 ```
   
+check the service data for the last 10 mins with this:
 
+```
+EPOCH=$(date +%s)
+aws xray get-service-graph --start-time $(($EPOCH-600)) --end-time $EPOCH
+
+```
+
+Now login to AWS console to cheack traces from your xray:
+
+(Link to snapshot)[assets/xray instrumentation.png]
 
 
 
