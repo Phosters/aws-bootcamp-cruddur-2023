@@ -169,8 +169,65 @@ opentelemetry-instrumentation-requests
 
 ```
 
+now lets install the dependencies for this in the backend :
 
+```
+pip install -r requirements.txt
 
+```
+
+In the app, ie the app.py for in the backend, we will impr the tools in the requirements
+
+```
+from opentelemetry import trace
+from opentelemetry.instrumentation.flask import FlaskInstrumentor
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
+from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+
+```
+
+After that, we will Initialize tracing and an exporter that can send data to Honeycomb with this :
+
+```
+provider = TracerProvider()
+processor = BatchSpanProcessor(OTLPSpanExporter())
+provider.add_span_processor(processor)
+trace.set_tracer_provider(provider)
+tracer = trace.get_tracer(__name__)
+
+```
+
+then Initialize automatic instrumentation with Flask:
+
+```
+app = Flask(__name__)
+FlaskInstrumentor().instrument_app(app)
+RequestsInstrumentor().instrument()
+
+```
+
+after this, add the env variables for the honeycomb in the docker compose env part with thi replacing the api keyfrom honeycomb adn service name as backend-flask:
+
+```
+OTEL_EXPORTER_OTLP_ENDPOINT: "https://api.honeycomb.io"
+OTEL_EXPORTER_OTLP_HEADERS: "x-honeycomb-team=${HONEYCOMB_API_KEY}"
+OTEL_SERVICE_NAME: "${HONEYCOMB_SERVICE_NAME}"
+
+```
+
+Finally lets export the API keys and service name with this:
+
+```
+export HONEYCOMB_API_KEY=""
+export HONEYCOMB_SERVICE_NAME="Cruddur"
+gp env HONEYCOMB_API_KEY=""
+gp env HONEYCOMB_SERVICE_NAME="Cruddur"
+
+```
+
+Now check from honeycomb for your instrumentation
 
 
 
