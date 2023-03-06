@@ -154,7 +154,7 @@ aws xray get-service-graph --start-time $(($EPOCH-600)) --end-time $EPOCH
 
 Now login to AWS console to cheack traces from your xray:
 
-(Link to snapshot)[assets/xray instrumentation.png]
+[Link to snapshot](assets/xray instrumentation.png)
 
 
 
