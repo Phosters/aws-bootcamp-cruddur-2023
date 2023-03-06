@@ -154,7 +154,22 @@ aws xray get-service-graph --start-time $(($EPOCH-600)) --end-time $EPOCH
 
 Now login to AWS console to cheack traces from your xray:
 
-[Link to snapshot](assets/xray instrumentation.png)
+![Link to snapshot](assets/xray-instrumentation.png)
+
+
+### Instrumenting Honeycomb
+To begin with. lets export opentelemetry sdk and tools into our backend within the requirements file ie ``` requirements.txt ``` with this :
+
+```
+opentelemetry-api 
+opentelemetry-sdk 
+opentelemetry-exporter-otlp-proto-http 
+opentelemetry-instrumentation-flask 
+opentelemetry-instrumentation-requests
+
+```
+
+
 
 
 
