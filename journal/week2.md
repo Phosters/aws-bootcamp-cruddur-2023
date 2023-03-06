@@ -14,7 +14,76 @@ These tools are :
 - Roll bar
 
 ### Honeycomb Instrumentation in the Backend Flask
+To begin with. lets export opentelemetry sdk and tools into our backend within the requirements file ie ``` requirements.txt ``` with this :
 
+```
+opentelemetry-api 
+opentelemetry-sdk 
+opentelemetry-exporter-otlp-proto-http 
+opentelemetry-instrumentation-flask 
+opentelemetry-instrumentation-requests
+
+```
+
+now lets install the dependencies for this in the backend :
+
+```
+pip install -r requirements.txt
+
+```
+
+In the app, ie the app.py for in the backend, we will impr the tools in the requirements
+
+```
+from opentelemetry import trace
+from opentelemetry.instrumentation.flask import FlaskInstrumentor
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
+from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+
+```
+
+After that, we will Initialize tracing and an exporter that can send data to Honeycomb with this :
+
+```
+provider = TracerProvider()
+processor = BatchSpanProcessor(OTLPSpanExporter())
+provider.add_span_processor(processor)
+trace.set_tracer_provider(provider)
+tracer = trace.get_tracer(__name__)
+
+```
+
+then Initialize automatic instrumentation with Flask:
+
+```
+app = Flask(__name__)
+FlaskInstrumentor().instrument_app(app)
+RequestsInstrumentor().instrument()
+
+```
+
+after this, add the env variables for the honeycomb in the docker compose env part with thi replacing the api keyfrom honeycomb adn service name as backend-flask:
+
+```
+OTEL_EXPORTER_OTLP_ENDPOINT: "https://api.honeycomb.io"
+OTEL_EXPORTER_OTLP_HEADERS: "x-honeycomb-team=${HONEYCOMB_API_KEY}"
+OTEL_SERVICE_NAME: "${HONEYCOMB_SERVICE_NAME}"
+
+```
+
+Finally lets export the API keys and service name with this:
+
+```
+export HONEYCOMB_API_KEY=""
+export HONEYCOMB_SERVICE_NAME="Cruddur"
+gp env HONEYCOMB_API_KEY=""
+gp env HONEYCOMB_SERVICE_NAME="Cruddur"
+
+```
+
+Now check from honeycomb for your instrumentation
 
 ### AWS X-Ray Instrumentation 
 
@@ -157,81 +226,53 @@ Now login to AWS console to cheack traces from your xray:
 ![Link to snapshot](assets/xray-instrumentation.png)
 
 
-### Instrumenting Honeycomb
-To begin with. lets export opentelemetry sdk and tools into our backend within the requirements file ie ``` requirements.txt ``` with this :
+### Cloudwatch logs 
+CloudWatch Logs enables you to centralize the logs from all of your systems, applications, and AWS services that you use, in a single, highly scalable service.
+First we will start with adding watchtower to our backend within the requirement file
 
 ```
-opentelemetry-api 
-opentelemetry-sdk 
-opentelemetry-exporter-otlp-proto-http 
-opentelemetry-instrumentation-flask 
-opentelemetry-instrumentation-requests
+watchtower
 
 ```
 
-now lets install the dependencies for this in the backend :
+After that, we will install the requirements file to install the watchtower
 
 ```
 pip install -r requirements.txt
 
 ```
 
-In the app, ie the app.py for in the backend, we will impr the tools in the requirements
+In the app.py in the backend, we will add this to the backend
 
 ```
-from opentelemetry import trace
-from opentelemetry.instrumentation.flask import FlaskInstrumentor
-from opentelemetry.instrumentation.requests import RequestsInstrumentor
-from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
-from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchSpanProcessor
+import watchtower
+import logging
+from time import strftime
 
 ```
 
-After that, we will Initialize tracing and an exporter that can send data to Honeycomb with this :
+After that, we will configure the app to use cloudwacth logger by adding this to the app.py
 
 ```
-provider = TracerProvider()
-processor = BatchSpanProcessor(OTLPSpanExporter())
-provider.add_span_processor(processor)
-trace.set_tracer_provider(provider)
-tracer = trace.get_tracer(__name__)
-
-```
-
-then Initialize automatic instrumentation with Flask:
-
-```
-app = Flask(__name__)
-FlaskInstrumentor().instrument_app(app)
-RequestsInstrumentor().instrument()
+LOGGER = logging.getLogger(__name__)
+LOGGER.setLevel(logging.DEBUG)
+console_handler = logging.StreamHandler()
+cw_handler = watchtower.CloudWatchLogHandler(log_group='cruddur')
+LOGGER.addHandler(console_handler)
+LOGGER.addHandler(cw_handler)
+LOGGER.info("some message")
 
 ```
 
-after this, add the env variables for the honeycomb in the docker compose env part with thi replacing the api keyfrom honeycomb adn service name as backend-flask:
+And this one too:
 
 ```
-OTEL_EXPORTER_OTLP_ENDPOINT: "https://api.honeycomb.io"
-OTEL_EXPORTER_OTLP_HEADERS: "x-honeycomb-team=${HONEYCOMB_API_KEY}"
-OTEL_SERVICE_NAME: "${HONEYCOMB_SERVICE_NAME}"
-
+@app.after_request
+def after_request(response):
+    timestamp = strftime('[%Y-%b-%d %H:%M]')
+    LOGGER.error('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
+    return response
 ```
-
-Finally lets export the API keys and service name with this:
-
-```
-export HONEYCOMB_API_KEY=""
-export HONEYCOMB_SERVICE_NAME="Cruddur"
-gp env HONEYCOMB_API_KEY=""
-gp env HONEYCOMB_SERVICE_NAME="Cruddur"
-
-```
-
-Now check from honeycomb for your instrumentation
-
-
-
-
 
 
 
