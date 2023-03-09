@@ -1,5 +1,8 @@
 # Week 3 — Decentralized Authentication
-
+Reference
+![Link to Decentralised authentication](https://www.loginradius.com/blog/identity/what-is-decentralized-authentication/)
+Decentralized authentication simply means that there is no central authority needed to verify your identity, i.e., decentralized identifiers. DIDs (Decentralized Identifiers) are a special type of identifier that allows for decentralized, verified digital identification. A DID is any subject identified by the DID's controller (e.g., a person, organization, thing, data model, abstract entity, etc.).
+DIDs, unlike traditional federated identifiers, are designed to be independent of centralized registries, identity providers, and certificate authorities.
 ### Sign into AWS and configure cognito
 
 ### Creating user pool (user group)
