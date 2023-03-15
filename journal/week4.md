@@ -64,3 +64,33 @@ gp env CONNECTION_URL="postgresql://postgres:password@localhost:5432/cruddur"
 Once this is done, we will want to control our db with scripting
 lets locate our backend and create a ``` bin ``` folder and add three files with name ``` db-drop ``` , ``` db-create ``` , and ```db-schema load ```
 to access them be in the backedend and  type ``` ls -al ./bin ``` to show the three files which wont give access to them, so letsgive them the preferred permission.
+
+```
+chmod 644 ./bin/db-drop
+
+```
+
+```
+chmod 644 ./bin/db-schema-load
+
+```
+
+```
+chmod 644 ./bin/db-create
+
+```
+
+Now to manipulate strings, we will be using SED which is a text stream editor used on Unix systems to edit files quickly and efficiently. The tool searches through, replaces, adds, and deletes lines in a text file without opening the file in a text editor
+
+```
+echo "db-drop"
+
+NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
+
+psql $NO_DB_CONNECTION_URL -c "drop database cruddur;"
+
+```
+
+
+
+
