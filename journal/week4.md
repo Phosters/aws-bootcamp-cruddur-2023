@@ -19,7 +19,7 @@ Check whether db to be created name exist already with this
 then use this to quit
 
 ```
-q
+\q
 ```
 
 We create postgresql with this command 
@@ -48,12 +48,11 @@ Now lets export the connection url to avoid inserting password everytime we logi
 
 ```
 export CONNECTION_URL="postgresql://postgres:password@localhost:5432/cruddur"
-
 ```
 
 and set it for our env too 
 
-``
+```
 gp env CONNECTION_URL="postgresql://postgres:password@localhost:5432/cruddur"
 
 ```
