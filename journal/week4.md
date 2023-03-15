@@ -7,29 +7,25 @@ We will be using RDS from AWS, so lets create a ```postgresql ``` in AWS with na
 ### Now we will create in our development envt a postgress db
 First connect to postgresql client to work within postgress
 
+```psql -U postgres --host localhost
 ```
-psql -U postgres --host localhost
 
-```
 Check whether db to be created name exist already with this
 
 ```
 \l   
-
 ```
 
 then use this to quit
 
 ```
 q
-
 ```
 
 We create postgresql with this command 
 
 ```
 CREATE database cruddur;
-
 ```
 
 Now lets import the script of the db
@@ -54,6 +50,7 @@ Now lets export the connection url to avoid inserting password everytime we logi
 export CONNECTION_URL="postgresql://postgres:password@localhost:5432/cruddur"
 
 ```
+
 and set it for our env too 
 
 ``
