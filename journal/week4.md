@@ -86,7 +86,16 @@ NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
 psql $NO_DB_CONNECTION_URL -c "drop database cruddur;"
 
 ```
+to create the deleted db again 
 
+```
+echo "db-create"
+
+NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
+
+psql $NO_DB_CONNECTION_URL -c "create database cruddur;"
+
+```
 
 
 
