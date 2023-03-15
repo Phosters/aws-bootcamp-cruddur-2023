@@ -276,7 +276,7 @@ def after_request(response):
 
 ### Rollbar Instrumentation
 Reference
-![Link to Rollbar](https://rollbar.com/)
+[Link to Rollbar](https://rollbar.com/)
 Is used to Instrument any application and capture all app crashes, errors and exceptions as they happen. Turn errors into signals you can use to focus on what’s wrong. Don’t get stuck digging through logs or creating queries and filters just to find the problem.
 
 
