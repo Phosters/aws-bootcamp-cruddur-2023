@@ -40,3 +40,27 @@ The command to import:
 psql cruddur < db/schema.sql -h localhost -U postgres
 
 ```
+
+Now we need to have Postgres generate out UUIDs. We'll need to use an extension called:
+
+```
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+```
+
+Now lets export the connection url to avoid inserting password everytime we login
+
+```
+export CONNECTION_URL="postgresql://postgres:password@localhost:5432/cruddur"
+
+```
+and set it for our env too 
+
+``
+gp env CONNECTION_URL="postgresql://postgres:password@localhost:5432/cruddur"
+
+```
+
+Once this is done, we will want to control our db with scripting
+lets locate our backend and create a ``` bin ``` folder and add three files with name ``` db-drop ``` , ``` db-create ``` , and ```db-schema load ```
+to access them be in the backedend and  type ``` ls -al ./bin ``` to show the three files which wont give access to them, so letsgive them the preferred permission.
