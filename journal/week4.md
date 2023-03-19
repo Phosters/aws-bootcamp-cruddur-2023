@@ -62,17 +62,17 @@ lets locate our backend and create a ``` bin ``` folder and add three files with
 to access them be in the backedend and  type ``` ls -al ./bin ``` to show the three files which wont give access to them, so letsgive them the preferred permission.
 
 ```
-chmod 644 ./bin/db-drop
+chmod u + x ./bin/db-drop
 
 ```
 
 ```
-chmod 644 ./bin/db-schema-load
+chmod u + x ./bin/db-schema-load
 
 ```
 
 ```
-chmod 644 ./bin/db-create
+chmod u + x ./bin/db-create
 
 ```
 
