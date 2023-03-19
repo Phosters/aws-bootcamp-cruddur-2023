@@ -125,7 +125,7 @@ chmod u+x ./bin/db-setup
 
 ```
 
-lets install python packages for postgres in the bcackend within the requirements file with pscopg because Psycopg is the most popular PostgreSQL adapter for the Python programming language. Its core is a complete implementation of the Python DB API 2.0 specifications. Several extensions allow access to many of the features offered by PostgreSQL.
+lets install python packages for postgres in the bcackend within the requirements file with pscopg because Psycopg is the most popular PostgreSQL adapter for the Python programming language. Its core is a complete implementation of the Python DB API 2.0 specifications. Several extensions allow access to many of the features offered by PostgreSQL. this will facilitate 
 
 ```
 psycopg[binary]
@@ -140,12 +140,45 @@ pip install -r requirements.txt
 
 ```
 
+now we do a Database connection pooling which is a way to reduce the cost of opening and closing connections by maintaining a “pool” of open connections that can be passed from database operation to database operation as needed
+we start with creating a a file in lib at the backend with this
 
+```
+lib/db.py
 
+```
 
+after that, we will then create our connection pool with this within the db.py file
 
+```
+from psycopg_pool import ConnectionPool
+import os
 
+def query_wrap_object(template):
+  sql = '''
+  (SELECT COALESCE(row_to_json(object_row),'{}'::json) FROM (
+  {template}
+  ) object_row);
+  '''
 
+def query_wrap_array(template):
+  sql = '''
+  (SELECT COALESCE(array_to_json(array_agg(row_to_json(array_row))),'[]'::json) FROM (
+  {template}
+  ) array_row);
+  '''
+
+connection_url = os.getenv("CONNECTION_URL")
+pool = ConnectionPool(connection_url)
+
+```
+
+now after setting our connection url, we will add it to our docker compose file backend environment
+
+``
+CONNECTION_URL: "postgresql://postgres:password@db:5432/cruddur"
+
+```
 
 
 
