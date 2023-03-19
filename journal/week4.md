@@ -118,3 +118,36 @@ source "$bin_path/db-seed"
 
 ```
 
+lets install python packages for postgres in the bcackend within the requirements file with pscopg because Psycopg is the most popular PostgreSQL adapter for the Python programming language. Its core is a complete implementation of the Python DB API 2.0 specifications. Several extensions allow access to many of the features offered by PostgreSQL.
+
+```
+psycopg[binary]
+psycopg[pool]
+
+``
+
+to implement this we need to install the requirement file to take effect
+
+```
+pip install -r requirements.txt
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
