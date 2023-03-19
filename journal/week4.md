@@ -180,13 +180,75 @@ CONNECTION_URL: "postgresql://postgres:password@db:5432/cruddur"
 
 ```
 
+in our home activities within services at the backend, we will replace the commands with this
+
+```
+from lib.db import pool, query_wrap_array
+
+      sql = query_wrap_array("""
+      SELECT
+        activities.uuid,
+        users.display_name,
+        users.handle,
+        activities.message,
+        activities.replies_count,
+        activities.reposts_count,
+        activities.likes_count,
+        activities.reply_to_activity_uuid,
+        activities.expires_at,
+        activities.created_at
+      FROM public.activities
+      LEFT JOIN public.users ON users.uuid = activities.user_uuid
+      ORDER BY activities.created_at DESC
+      """)
+      print(sql)
+      with pool.connection() as conn:
+        with conn.cursor() as cur:
+          cur.execute(sql)
+          # this will return a tuple
+          # the first field being the data
+          json = cur.fetchone()
+      return json[0]
+```
 
 
+now lets connect to our aws production environment by setting the env and exporting it at the backend
+
+```
+export PROD_PRODUCTION_URL="postgresql://cruddurroot:mydatabase1@cruddur-db-instance.co4g9cpqsccw.us-east-1.rds.amazonaws.com:5432/cruddur"
 
 
+gp env PROD_PRODUCTION_URL="postgresql://cruddurroot:mydatabase1@cruddur-db-instance.co4g9cpqsccw.us-east-1.rds.amazonaws.com:5432/cruddur"
 
+```
 
+confirm it persists with this
 
+```
+env | grep PROD_PRODUCTION_URL
 
+```
 
+Lets update our AWS db security group to accept data only from our personal ip, to get our ip in codespace  
 
+```
+curl ifconfig.me
+
+```
+We set persist it our environment with this
+
+```
+CODESPACE_IP=$(curl ifconfig.me)
+
+```
+
+Now lets export our Security Group , picking the main SG ID and the security group Inbound rule
+
+```
+export DB_SG_ID="sg-087317960a50aa323"
+gp env DB_SG_ID="sg-087317960a50aa323"
+
+export DB_SG_RULE_ID="sgr-04d955fd8c56d1e6d"
+gp env DB_SG_RULE_ID="sgr-04d955fd8c56d1e6d"
+
+```
