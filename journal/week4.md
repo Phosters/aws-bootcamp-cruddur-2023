@@ -97,7 +97,7 @@ psql $NO_DB_CONNECTION_URL -c "create database cruddur;"
 
 ```
 
-Now we will need a centralised file to manupulate the entire bin files from, from create to drop to connect to sschema load, we create a file in bin called db-setup and insert this commands
+Now we will need a centralised file to manupulate the entire bin files from, from create to drop to connect to schema load, we create a file in bin called db-setup and insert this commands
 
 ```
 #! /usr/bin/bash
@@ -118,6 +118,13 @@ source "$bin_path/db-seed"
 
 ```
 
+make sure the set-up file is executeable with this
+
+```
+chmod u+x ./bin/db-setup
+
+```
+
 lets install python packages for postgres in the bcackend within the requirements file with pscopg because Psycopg is the most popular PostgreSQL adapter for the Python programming language. Its core is a complete implementation of the Python DB API 2.0 specifications. Several extensions allow access to many of the features offered by PostgreSQL.
 
 ```
@@ -132,7 +139,6 @@ to implement this we need to install the requirement file to take effect
 pip install -r requirements.txt
 
 ```
-
 
 
 
