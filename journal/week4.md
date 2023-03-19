@@ -253,10 +253,22 @@ gp env DB_SG_RULE_ID="sgr-04d955fd8c56d1e6d"
 
 ```
 
-To set envt programmatically, we use this
+To set envt programmatically, we use this in our bin folder
 
 ```
 aws ec2 modify-security-group-rules \
     --group-id $DB_SG_ID \
     --security-group-rules "SecurityGroupRuleId=$DB_SG_RULE_ID,SecurityGroupRule={IpProtocol=tcp,FromPort=5432,ToPort=5432,CidrIpv4=$GITPOD_IP/32}"
 ```
+
+Finally we will create a lambda function to work with
+
+```
+PG_HOSTNAME='cruddur-db-instance.co4g9cpqsccw.us-east-1.rds.amazonaws.com'
+PG_DATABASE='cruddur'
+PG_USERNAME='root'
+PG_PASSWORD='mydatabase1'
+
+```
+
+
