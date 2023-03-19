@@ -252,3 +252,11 @@ export DB_SG_RULE_ID="sgr-04d955fd8c56d1e6d"
 gp env DB_SG_RULE_ID="sgr-04d955fd8c56d1e6d"
 
 ```
+
+To set envt programmatically, we use this
+
+```
+aws ec2 modify-security-group-rules \
+    --group-id $DB_SG_ID \
+    --security-group-rules "SecurityGroupRuleId=$DB_SG_RULE_ID,SecurityGroupRule={IpProtocol=tcp,FromPort=5432,ToPort=5432,CidrIpv4=$GITPOD_IP/32}"
+```
