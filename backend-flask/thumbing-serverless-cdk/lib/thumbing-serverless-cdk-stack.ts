@@ -4,6 +4,9 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import { ILambdaApplication } from 'aws-cdk-lib/aws-codedeploy';
 import { LambdaDataSource } from 'aws-cdk-lib/aws-appsync';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 
 export class ThumbingServerlessCdkStack extends cdk.Stack {
@@ -13,8 +16,11 @@ export class ThumbingServerlessCdkStack extends cdk.Stack {
     // The code that defines your stack goes here
     const bucketName:string=process.env.THUMBING_BUCKET_NAME as string;
     const functionPath:string=process.env.THUMBING_FUNCTION_PATH as string;
+    const folderInput:string=process.env.THUMBING_S3_FOLDER_INPUT as string;
+    const folderOutput:string=process.env.THUMBING_S3_FOLDER_OUTPUT as string;
 
     const bucket=this.createBucket(bucketName);
+    const lambda=this.createLambda(functionPath, bucketName, folderInput, folderOutput);
     
   }
     createBucket(bucketName:string): s3.IBucket {
@@ -25,13 +31,20 @@ export class ThumbingServerlessCdkStack extends cdk.Stack {
       return bucket;
 
   }
-  createLambda(functionPath: string):lambda.IFunction{
-    const lamdaFunction = new lambda.Function(this, 'Thumblambda',{
+  createLambda(functionPath: string, bucketName: string, folderInput: string, folderOutput: string):lambda.IFunction{
+    const lamdaFunction = new lambda.Function(this, 'Thumblambda', {
     runtime: lambda.Runtime.NODEJS_18_X,
     handler: 'index.handler',
     code: lambda.Code.fromAsset(functionPath)
+    environment: {
+      DEST_BUCKET_NAME: bucketName,
+      FOLDER_INPUT: folderInput,
+      FOLDER_OUTPUT: folderOutput,
+      PROCESS_WIDTH: '512',
+      PROCESS_HEIGHT: '512',
+    }
     });
     return lamdaFunction;
-  };
+  }
 
 }
