@@ -35,7 +35,7 @@ export class ThumbingServerlessCdkStack extends cdk.Stack {
     const lamdaFunction = new lambda.Function(this, 'Thumblambda', {
     runtime: lambda.Runtime.NODEJS_18_X,
     handler: 'index.handler',
-    code: lambda.Code.fromAsset(functionPath)
+    code: lambda.Code.fromAsset(functionPath),
     environment: {
       DEST_BUCKET_NAME: bucketName,
       FOLDER_INPUT: folderInput,
