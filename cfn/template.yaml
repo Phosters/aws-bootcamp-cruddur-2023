@@ -1,16 +1,18 @@
-AWSTemplateFormatVersion: -201-09-09
+AWSTemplateFormatVersion: 2010-09-09
 
-Description:
+Description: |
   Setup ECS Clustter
+
+Resources:
+  ECSCluster:
+    Type: 'AWS::ECS::Cluster'
 
 Parmaeters:
 
 Mappings:
 
-Resources:
-
 Outputs:
 
 Metadata:
-  
+
 
