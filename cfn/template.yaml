@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: -201-09-09
+
+Description:
+  Setup ECS Clustter
+
+Parmaeters:
+
+Mappings:
+
+Resources:
+
+Outputs:
+
+Metadata:
+  
+
